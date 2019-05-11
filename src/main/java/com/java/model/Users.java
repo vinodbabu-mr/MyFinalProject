@@ -2,18 +2,18 @@ package com.java.model;
 
 import java.util.List;
 
-public class Books {
+public class Users {
 
-	private List<Book> book;
+	private List<User> user;
 	private String status;
 	private Integer code;
 
-	public List<Book> getBook() {
-		return book;
+	public List<User> getUser() {
+		return user;
 	}
 
-	public void setBook(List<Book> book) {
-		this.book = book;
+	public void setUser(List<User> user) {
+		this.user = user;
 	}
 
 	public String getStatus() {

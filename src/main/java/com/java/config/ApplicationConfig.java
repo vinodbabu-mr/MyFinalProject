@@ -13,11 +13,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
+import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
+import com.java.model.User;
 
 
 @Configuration
@@ -26,7 +30,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @PropertySource("classpath:database.properties")
 @EnableWebMvc
 @ComponentScan(basePackages = "com.java")
-class ApplicationConfig {
+class ApplicationConfig extends RepositoryRestConfigurerAdapter {
 	
   @Autowired
   Environment envv;
@@ -72,5 +76,10 @@ class ApplicationConfig {
     JpaTransactionManager txManager = new JpaTransactionManager();
     txManager.setEntityManagerFactory(entityManagerFactory());
     return txManager;
+  }
+  
+  @Override
+  public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
+      config.exposeIdsFor(User.class);
   }
 }
