@@ -10,9 +10,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.java.rest</groupId>
-	<artifactId>restful</artifactId>
+	<artifactId>MyFinalProject</artifactId>
 	<version>1.0.0</version>
-	<name>restful</name>
+	<name>MyFinalProject</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
@@ -38,11 +38,11 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.boot</groupId> -->
+<!-- 			<artifactId>spring-boot-starter-test</artifactId> -->
+<!-- 			<scope>test</scope> -->
+<!-- 		</dependency> -->
 
 
 		<!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa -->
