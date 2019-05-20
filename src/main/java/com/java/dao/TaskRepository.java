@@ -7,10 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.java.model.Project;
+import com.java.model.Task;
 
 @Repository
-public interface TaskRepository<B> extends JpaRepository<Project,Long> {
+public interface TaskRepository<B> extends JpaRepository<Task,Long> {
 
 //	public void persist(T entity);
 //	
@@ -25,25 +25,25 @@ public interface TaskRepository<B> extends JpaRepository<Project,Long> {
 //	public void deleteAll();
 	
 	
-	public Project findByProjectId(Integer projectId);
+	public Task findByTaskId(Integer taskId);
 	
-	@Query("SELECT u from Project u order by project_id")
-	public List<Project> orderByProjectId();
+	@Query("SELECT u from Task u order by task_id")
+	public List<Task> orderByTaskId();
 	
-	@Query("SELECT u from Project u order by start_date")
-	public List<Project> orderByStartDate();
+	@Query("SELECT u from Task u order by start_date")
+	public List<Task> orderByStartDate();
 	
-	@Query("SELECT u from Project u order by end_date")
-	public List<Project> orderByEndDate();
+	@Query("SELECT u from Task u order by end_date")
+	public List<Task> orderByEndDate();
 	
-	@Query("SELECT u from Project u order by priority")
-	public List<Project> orderByPriority();
+	@Query("SELECT u from Task u order by priority")
+	public List<Task> orderByPriority();
 	
-	@Query("SELECT u from Project u order by status")
-	public List<Project> orderByStatus();
+	@Query("SELECT u from Task u order by status")
+	public List<Task> orderByStatus();
 	
-	@Query("DELETE from Project u where u.projectId = :projectId")
-	public void deleteByProjectId(@Param("projectId") Integer projectId);
+	@Query("DELETE from Task u where u.taskId = :taskId")
+	public void deleteByTaskId(@Param("taskId") Integer taskId);
 	
 //	@Query("SELECT b FROM Book b WHERE b.price >= :price")
 //	public List<Book> findByPrice(@Param("price") double price);

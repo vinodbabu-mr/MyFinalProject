@@ -15,18 +15,25 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Parent {
 
-	@Column(name = "parent_task_name")
-	private String name;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "parent_id")
 	private Integer parentId;
+
+	@Column(name = "parent_task_name")
+	private String name;
 
 	public Parent(String name, Integer parentId) {
 		super();
 		this.name = name;
 		this.parentId = parentId;
 	}
+	
+	public Parent() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getName() {
 		return name;
 	}
