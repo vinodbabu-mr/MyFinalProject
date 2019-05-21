@@ -30,20 +30,28 @@ public interface TaskRepository<B> extends JpaRepository<Task,Long> {
 	@Query("SELECT u from Task u order by task_id")
 	public List<Task> orderByTaskId();
 	
-	@Query("SELECT u from Task u order by start_date")
-	public List<Task> orderByStartDate();
+	@Query("SELECT t.taskId, t.taskName, p.name, t.startDate, t.endDate, t.priority, t.status, t.parentId"
+			+ " from Task t, Parent p where t.parentId = p.parentId order by start_date")
+	public List<Object[]> orderByStartDate();
 	
-	@Query("SELECT u from Task u order by end_date")
-	public List<Task> orderByEndDate();
+	@Query("SELECT t.taskId, t.taskName, p.name, t.startDate, t.endDate, t.priority, t.status, t.parentId"
+			+ " from Task t, Parent p where t.parentId = p.parentId order by end_date")
+	public List<Object[]> orderByEndDate();
 	
-	@Query("SELECT u from Task u order by priority")
-	public List<Task> orderByPriority();
+	@Query("SELECT t.taskId, t.taskName, p.name, t.startDate, t.endDate, t.priority, t.status, t.parentId"
+			+ " from Task t, Parent p where t.parentId = p.parentId order by priority")
+	public List<Object[]> orderByPriority();
 	
-	@Query("SELECT u from Task u order by status")
-	public List<Task> orderByStatus();
+	@Query("SELECT t.taskId, t.taskName, p.name, t.startDate, t.endDate, t.priority, t.status, t.parentId"
+			+ " from Task t, Parent p where t.parentId = p.parentId order by status")
+	public List<Object[]> orderByStatus();
 	
 	@Query("DELETE from Task u where u.taskId = :taskId")
 	public void deleteByTaskId(@Param("taskId") Integer taskId);
+	
+	@Query("SELECT t.taskId, t.taskName, p.name, t.startDate, t.endDate, t.priority, t.status, t.parentId"
+			+ " from Task t, Parent p where t.parentId = p.parentId and t.projectId = :projectId")
+	public List<Object[]> getTaskByProjectId(@Param("projectId") Integer projectId);
 	
 //	@Query("SELECT b FROM Book b WHERE b.price >= :price")
 //	public List<Book> findByPrice(@Param("price") double price);

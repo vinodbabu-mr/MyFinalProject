@@ -17,7 +17,12 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.java.dao.ParentRepository;
 import com.java.dao.TaskRepository;
+import com.java.model.Parent;
+import com.java.model.Parents;
+import com.java.model.ProjectTask;
+import com.java.model.ProjectTasks;
 import com.java.model.Task;
 import com.java.model.Tasks;
 import com.java.rest.RestfulApplication;
@@ -36,19 +41,45 @@ public class TaskServiceTest {
 
 	@MockBean
 	private TaskRepository<Task> taskRepo;
+	@MockBean
+	private ParentRepository<Parent> parentRepo;
 	
 	Task task;
+	ProjectTask projectTask;
+	Parent parent;
+	
 	List<Task> taskList  = new ArrayList<Task>();
 	Tasks response;
+	
+	List<Parent> parentList = new ArrayList<Parent>();
+	Parents res;
+	
+	List<Object[]> objList = new ArrayList<>();
+	List<ProjectTask> prjTaskList  = new ArrayList<ProjectTask>();
+	ProjectTasks resp;
 	
 	@Before
 	public void setUp() throws ParseException {
 		task = new Task(1,"CONGO", "2019-01-01","2019-12-31",10, "IN PROGRESS", 1,2);
+		projectTask = new ProjectTask(1,"Interview","Recruiting",10,"2019-01-01","2019-12-31","IN PROGRESS",1);
+		parent = new Parent("Invoicing",0);
 		taskList.add(task);
+		prjTaskList.add(projectTask);
+		parentList.add(parent);
+		Object[] obj = {1,"Interview","Recruit","2019-01-01","2019-12-31",15,"COMPLETED",4};
+		objList.add(obj);
 		response = new Tasks();
 		response.setTask(taskList);
 		response.setStatus("success");
 		response.setCode(100);
+		resp = new ProjectTasks();
+		resp.setTask(prjTaskList);
+		resp.setStatus("success");
+		resp.setCode(100);
+		res = new Parents();
+		res.setParent(parentList);
+		res.setStatus("success");
+		res.setCode(100);
 	}
 
 	@Test
@@ -65,6 +96,17 @@ public class TaskServiceTest {
 		Assert.assertEquals(tasks.getStatus(),"success");
 		Assert.assertEquals(tasks.getCode().longValue(),100L);
 		Assert.assertNotNull(task.toString());
+	}
+	
+	@Test
+	public void testGetParentTasks() {
+		Mockito.when(parentRepo.findAll()).thenReturn(parentList);
+		Parents parents = taskService.getParents();
+		List<Parent> taskLst = parents.getParent();
+		Assert.assertEquals(taskLst.get(0).getName(),parentList.get(0).getName());
+		Assert.assertEquals(taskLst.get(0).getParentId(),parentList.get(0).getParentId());
+		Assert.assertEquals(parents.getStatus(),"success");
+		Assert.assertEquals(parents.getCode().longValue(),100L);
 	}
 	
 	@Test
@@ -136,11 +178,17 @@ public class TaskServiceTest {
 		Mockito.when(taskRepo.orderByTaskId()).thenReturn(null);
 		Assert.assertEquals(taskService.getTasksById().getTask(), null);
 	}
+
+	@Test
+	public void testTaskByProjectId() throws Exception {
+		Mockito.when(taskRepo.getTaskByProjectId(1)).thenReturn(objList);
+		Assert.assertEquals(taskService.getTaskByProjectId(1).getStatus(), "success");
+	}
 	
 	@Test
 	public void testTaskByFirstName() throws Exception {
-		Mockito.when(taskRepo.orderByStartDate()).thenReturn(taskList);
-		Assert.assertEquals(taskService.getTasksByStartDate().getTask(), taskList);
+		Mockito.when(taskRepo.orderByStartDate()).thenReturn(objList);
+		Assert.assertEquals(taskService.getTasksByStartDate().getStatus(), "success");
 	}
 	
 	@Test
@@ -151,8 +199,8 @@ public class TaskServiceTest {
 	
 	@Test
 	public void testTaskByLastName() throws Exception {
-		Mockito.when(taskRepo.orderByPriority()).thenReturn(taskList);
-		Assert.assertEquals(taskService.getTasksByPriority().getTask(), taskList);
+		Mockito.when(taskRepo.orderByPriority()).thenReturn(objList);
+		Assert.assertEquals(taskService.getTasksByPriority().getStatus(), "success");
 	}
 	
 	@Test

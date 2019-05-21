@@ -19,6 +19,8 @@ import com.java.dao.ParentRepository;
 import com.java.dao.TaskRepository;
 import com.java.model.Parent;
 import com.java.model.Parents;
+import com.java.model.ProjectTask;
+import com.java.model.ProjectTasks;
 import com.java.model.Task;
 import com.java.model.Tasks;
 
@@ -68,6 +70,36 @@ public class TaskService {
 		}
 		return response;
 	}
+
+	@RequestMapping(value = "/tasksByProjectId/{id}", method = RequestMethod.GET)
+	public ProjectTasks getTaskByProjectId(@PathVariable("id") Integer TaskId) {
+		ProjectTasks response = new ProjectTasks();
+		List<ProjectTask> taskList = new ArrayList<ProjectTask>();
+		List<Object[]> obj = TaskRepo.getTaskByProjectId(TaskId);
+		if (null != obj) {
+			for (Object[] object : obj) {
+				ProjectTask prjTask = new ProjectTask();
+				prjTask.setTaskId((Integer) object[0]);
+				prjTask.setTaskName((String) object[1]);
+				prjTask.setParentTask((String) object[2]);
+				prjTask.setStartDate((String) object[3]);
+				prjTask.setEndDate((String) object[4]);
+				prjTask.setPriority((Integer) object[5]);
+				prjTask.setStatus((String) object[6]);
+				prjTask.setParentId((Integer) object[7]);
+				taskList.add(prjTask);
+			}
+			response.setTask(taskList);
+			response.setStatus(SUCCESS_STATUS);
+			response.setCode(CODE_SUCCESS);
+		} else {
+			response.setStatus(ERROR_STATUS);
+			response.setCode(AUTH_FAILURE);
+		}
+		return response;
+
+	}
+
 	@RequestMapping(value = "/tasksById", method = RequestMethod.GET)
 	public Tasks getTasksById() {
 
@@ -86,12 +118,24 @@ public class TaskService {
 	}
 
 	@RequestMapping(value = "/tasksByStartDate", method = RequestMethod.GET)
-	public Tasks getTasksByStartDate() {
+	public ProjectTasks getTasksByStartDate() {
 
-		List<Task> taskList = new ArrayList<Task>();
-		Tasks response = new Tasks();
-		taskList = TaskRepo.orderByStartDate();
-		if (taskList != null) {
+		ProjectTasks response = new ProjectTasks();
+		List<ProjectTask> taskList = new ArrayList<ProjectTask>();
+		List<Object[]> obj = TaskRepo.orderByStartDate();
+		if (null != obj) {
+			for (Object[] object : obj) {
+				ProjectTask prjTask = new ProjectTask();
+				prjTask.setTaskId((Integer) object[0]);
+				prjTask.setTaskName((String) object[1]);
+				prjTask.setParentTask((String) object[2]);
+				prjTask.setStartDate((String) object[3]);
+				prjTask.setEndDate((String) object[4]);
+				prjTask.setPriority((Integer) object[5]);
+				prjTask.setStatus((String) object[6]);
+				prjTask.setParentId((Integer) object[7]);
+				taskList.add(prjTask);
+			}
 			response.setTask(taskList);
 			response.setStatus(SUCCESS_STATUS);
 			response.setCode(CODE_SUCCESS);
@@ -103,12 +147,25 @@ public class TaskService {
 	}
 
 	@RequestMapping(value = "/tasksByEndDate", method = RequestMethod.GET)
-	public Tasks getTasksByEndDate() {
+	public ProjectTasks getTasksByEndDate() {
 
-		List<Task> taskList = new ArrayList<Task>();
-		Tasks response = new Tasks();
-		taskList = TaskRepo.orderByEndDate();
-		if (taskList != null) {
+		ProjectTasks response = new ProjectTasks();
+		List<ProjectTask> taskList = new ArrayList<ProjectTask>();
+		List<Object[]> obj = TaskRepo.orderByEndDate();
+		if (null != obj) {
+			for (Object[] object : obj) {
+				ProjectTask prjTask = new ProjectTask();
+				prjTask.setTaskId((Integer) object[0]);
+				prjTask.setTaskName((String) object[1]);
+				prjTask.setParentTask((String) object[2]);
+				prjTask.setStartDate((String) object[3]);
+				prjTask.setEndDate((String) object[4]);
+				prjTask.setPriority((Integer) object[5]);
+				prjTask.setStatus((String) object[6]);
+				prjTask.setParentId((Integer) object[7]);
+				taskList.add(prjTask);
+			}
+
 			response.setTask(taskList);
 			response.setStatus(SUCCESS_STATUS);
 			response.setCode(CODE_SUCCESS);
@@ -118,14 +175,26 @@ public class TaskService {
 		}
 		return response;
 	}
-	
+
 	@RequestMapping(value = "/tasksByPriority", method = RequestMethod.GET)
-	public Tasks getTasksByPriority() {
+	public ProjectTasks getTasksByPriority() {
 
-		List<Task> taskList = new ArrayList<Task>();
-		Tasks response = new Tasks();
-		taskList = TaskRepo.orderByPriority();
-		if (taskList != null) {
+		ProjectTasks response = new ProjectTasks();
+		List<ProjectTask> taskList = new ArrayList<ProjectTask>();
+		List<Object[]> obj = TaskRepo.orderByPriority();
+		if (null != obj) {
+			for (Object[] object : obj) {
+				ProjectTask prjTask = new ProjectTask();
+				prjTask.setTaskId((Integer) object[0]);
+				prjTask.setTaskName((String) object[1]);
+				prjTask.setParentTask((String) object[2]);
+				prjTask.setStartDate((String) object[3]);
+				prjTask.setEndDate((String) object[4]);
+				prjTask.setPriority((Integer) object[5]);
+				prjTask.setStatus((String) object[6]);
+				prjTask.setParentId((Integer) object[7]);
+				taskList.add(prjTask);
+			}
 			response.setTask(taskList);
 			response.setStatus(SUCCESS_STATUS);
 			response.setCode(CODE_SUCCESS);
@@ -135,14 +204,26 @@ public class TaskService {
 		}
 		return response;
 	}
-	
-	@RequestMapping(value = "/tasksByStatus", method = RequestMethod.GET)
-	public Tasks getTasksByStatus() {
 
-		List<Task> taskList = new ArrayList<Task>();
-		Tasks response = new Tasks();
-		taskList = TaskRepo.orderByStatus();
-		if (taskList != null) {
+	@RequestMapping(value = "/tasksByStatus", method = RequestMethod.GET)
+	public ProjectTasks getTasksByStatus() {
+
+		ProjectTasks response = new ProjectTasks();
+		List<ProjectTask> taskList = new ArrayList<ProjectTask>();
+		List<Object[]> obj = TaskRepo.orderByStatus();
+		if (null != obj) {
+			for (Object[] object : obj) {
+				ProjectTask prjTask = new ProjectTask();
+				prjTask.setTaskId((Integer) object[0]);
+				prjTask.setTaskName((String) object[1]);
+				prjTask.setParentTask((String) object[2]);
+				prjTask.setStartDate((String) object[3]);
+				prjTask.setEndDate((String) object[4]);
+				prjTask.setPriority((Integer) object[5]);
+				prjTask.setStatus((String) object[6]);
+				prjTask.setParentId((Integer) object[7]);
+				taskList.add(prjTask);
+			}
 			response.setTask(taskList);
 			response.setStatus(SUCCESS_STATUS);
 			response.setCode(CODE_SUCCESS);
@@ -188,7 +269,7 @@ public class TaskService {
 		}
 		return response;
 	}
-	
+
 	@RequestMapping(value = "/addParent", method = RequestMethod.POST)
 	@Consumes(MediaType.APPLICATION_JSON_VALUE)
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
